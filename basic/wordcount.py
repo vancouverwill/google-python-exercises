@@ -52,7 +52,7 @@ import sys
 def main():
   if len(sys.argv) != 3:
     print 'usage: ./wordcount.py {--count | --topcount} file'
-    sys.exit(1)
+    # sys.exit(1)
 
   option = sys.argv[1]
   filename = sys.argv[2]
@@ -62,7 +62,47 @@ def main():
     print_top(filename)
   else:
     print 'unknown option: ' + option
+    print 'please provide "--count" or "--topcount"'
     sys.exit(1)
+
+# sys.exit(1)
+
+def prepare_dictionary(filename):
+  f = open(filename, 'rU')
+  dict = {}
+  for line in f:
+    words = line.split(' ')
+    for raw_word in words:
+
+      lowercase_word = raw_word.lower()
+      word = lowercase_word.strip()
+
+      if (word.isalpha() != True): continue
+
+      if word in dict:
+        dict[word] += 1
+      else:
+        dict[word] = 1
+  f.close()
+
+  return dict
+
+
+def print_words(filename):
+  dict = prepare_dictionary(filename)
+
+  for word in sorted(dict):
+    print word + ':' + str(dict[word])
+
+
+def print_top(filename):
+  dict = prepare_dictionary(filename)
+
+  def MyFn(s):
+    return -dict[s]
+
+  for word in sorted(dict, key = MyFn):
+    print word + ':' + str(dict[word])
 
 if __name__ == '__main__':
   main()
