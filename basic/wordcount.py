@@ -101,8 +101,13 @@ def print_top(filename):
   def MyFn(s):
     return -dict[s]
 
+  count = 0
   for word in sorted(dict, key = MyFn):
     print word + ':' + str(dict[word])
+    count += 1
+    if count >= 20 :
+      break
+
 
 if __name__ == '__main__':
   main()
