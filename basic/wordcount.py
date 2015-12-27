@@ -52,7 +52,6 @@ import sys
 def main():
   if len(sys.argv) != 3:
     print 'usage: ./wordcount.py {--count | --topcount} file'
-    # sys.exit(1)
 
   option = sys.argv[1]
   filename = sys.argv[2]
@@ -65,7 +64,6 @@ def main():
     print 'please provide "--count" or "--topcount"'
     sys.exit(1)
 
-# sys.exit(1)
 
 def prepare_dictionary(filename):
   f = open(filename, 'rU')
