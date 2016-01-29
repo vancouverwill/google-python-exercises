@@ -53,14 +53,14 @@ def not_bad(s):
 #  a-front + b-front + a-back + b-back
 def front_back(a, b):
   # +++your code here+++
-  temp = -(len(a)/2)
-  a_front = a[: int(math.ceil(float(len(a))/2))]
-  a_back = a[-(len(a)/2):]
 
-  b_front = b[: int(math.ceil(float(len(b))/2))]
-  b_back = b[-(len(b)/2):]
+  def get_front(str) :
+    return str[: int(math.ceil(float(len(str))/2))]
 
-  return a_front + b_front + a_back + b_back
+  def get_back(str) :
+    return str[-(len(str)/2):]
+
+  return get_front(a) + get_front(b) + get_back(a) + get_back(b)
 
 
 # Simple provided test() function used in main() to print
