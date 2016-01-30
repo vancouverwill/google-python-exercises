@@ -43,42 +43,32 @@ def extract_names(filename):
    # Open file
   f = open(filename, 'r')
   # Feed the file text into findall(); it returns a list of all the found strings
-  # strings = re.findall(r'(Popularity in) (\d) (/h3)', f.read())
   years = re.findall(r'(Popularity in)\s([\d]{4})(</h3>)', f.read())
-
-  print years
 
   yearNo = years[0][1]
 
   print yearNo
-  # +++your code here+++
-
 
   f = open(filename, 'r')
 
-  # babies = re.findall(r'(<tr align="right"><td>)(\d{1,6})(</td><td>)(\w)(</td><td>)(\w)(</td>)', f.read())
   babies = re.findall(r'(<tr align="right"><td>)(\d{1,6})(</td><td>)(\w+)(</td><td>)(\w+)(</td>)', f.read())
-  # babies = re.findall(r'(align)', f.read())
 
-  # print babies
-  print babies[0]
-
-  rank = babies[0][1]
-  firstName = babies[0][3]
-  lastName = babies[0][5]
-
-  print rank + ' ' + firstName + ' ' + lastName
-  names = []
-  names.append(yearNo)
+  names_rank = {}
   for baby in babies:
     rank = baby[1]
-    firstName = baby[3]
-    lastName = baby[5]
-    names.append(firstName + ' ' + lastName + ' ' + rank)
+    male_name = baby[3]
+    female_name = baby[5]
+    names_rank[male_name] = rank
+    names_rank[female_name] = rank
 
-  print names
 
-  return
+  content = []
+  content.append(yearNo)
+
+  for name in sorted(names_rank):
+    content.append(name + " " + names_rank[name])
+
+  return content
 
 
 def main():
@@ -101,11 +91,11 @@ def main():
   # For each filename, get the names, then either print the text output
   # or write it to a summary file
 
-  print len(args)
+  # print len(args)
 
   for arg in args:
     print arg
-    extract_names(arg)
+    print extract_names(arg)
     break
   
 if __name__ == '__main__':
