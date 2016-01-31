@@ -28,6 +28,11 @@ def main():
     name = 'World Wide Web'
   print 'Hello', name
   print 'will'
+
+  words = ['cat', 'window', 'defenestrate']
+  for w in words:
+    print w, len(w)
+
 # This is the standard boilerplate that calls the main() function.
 if __name__ == '__main__':
   main()
