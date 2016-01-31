@@ -43,7 +43,7 @@ def extract_names(filename):
    # Open file
   f = open(filename, 'r')
   # Feed the file text into findall(); it returns a list of all the found strings
-  years = re.findall(r'(Popularity in)\s([\d]{4})(</h3>)', f.read())
+  years = re.findall(r'(Popularity in)\s([\d]{4})(</h)', f.read())
 
   yearNo = years[0][1]
 
@@ -91,12 +91,19 @@ def main():
   # For each filename, get the names, then either print the text output
   # or write it to a summary file
 
-  # print len(args)
+  if summary == True:
+    print "bring it"
+    for arg in args:
+      print arg
+      names = '\n'.join(extract_names(arg)) + '\n'
+      f = open(arg + '.summary', 'w')
+      f.write(names)
+      f.close()
+  else:
+    for arg in args:
+      print arg
+      print '\n'.join(extract_names(arg)) + '\n'
 
-  for arg in args:
-    print arg
-    print extract_names(arg)
-    break
   
 if __name__ == '__main__':
   main()
