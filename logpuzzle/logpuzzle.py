@@ -25,9 +25,7 @@ Here's what a puzzle url looks like:
 def read_urls(filename):
 
   print "filename: " +  filename.split("_")[1]
-
   http_path = "http://" + filename.split("_")[1]
-
   print "filename: " +  http_path
 
   f = open(filename, 'r')
@@ -40,10 +38,8 @@ def read_urls(filename):
   for line in f:   ## iterates over the lines of the file
     if line.find('puzzle') == -1: continue;
     lines_with_puzzle += 1;
-    # match = re.search(r'(GET)(.*\.jpg)(HTTP)', line)
     match = re.search(r'(GET\s)([a-z/-]*\.jpg)(\sHTTP)', line)
     if match == None : continue
-    # print match.group(2)
     image_slice_url = http_path + match.group(2)
     if image_slice_url in strings: continue;
     strings.append(image_slice_url)
