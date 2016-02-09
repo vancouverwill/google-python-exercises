@@ -24,7 +24,11 @@ Here's what a puzzle url looks like:
 # increasing order."""
 def read_urls(filename):
 
-  print "filename: " + filename
+  print "filename: " +  filename.split("_")[1]
+
+  http_path = "http://" + filename.split("_")[1]
+
+  print "filename: " +  http_path
 
   f = open(filename, 'r')
   # Feed the file text into findall(); it returns a list of all the found strings
@@ -40,8 +44,9 @@ def read_urls(filename):
     match = re.search(r'(GET\s)([a-z/-]*\.jpg)(\sHTTP)', line)
     if match == None : continue
     # print match.group(2)
-    if match.group(2) in strings: continue;
-    strings.append(match.group(2))
+    image_slice_url = http_path + match.group(2)
+    if image_slice_url in strings: continue;
+    strings.append(image_slice_url)
 
   print lines_with_puzzle
   print len(strings)
@@ -50,16 +55,32 @@ def read_urls(filename):
 
   # +++your code here+++
   
-
+# Given the urls already in the correct order, downloads
+# each image into the given directory.
+# Gives the images local filenames img0, img1, and so on.
+# Creates an index.html in the directory
+# with an img tag to show each local image file.
+# Creates the directory if necessary.
 def download_images(img_urls, dest_dir):
-  """Given the urls already in the correct order, downloads
-  each image into the given directory.
-  Gives the images local filenames img0, img1, and so on.
-  Creates an index.html in the directory
-  with an img tag to show each local image file.
-  Creates the directory if necessary.
-  """
-  # +++your code here+++
+  if os.path.exists(dest_dir) != True:
+    os.mkdir(dest_dir)
+
+  f = open(dest_dir + '/index.html', 'w')
+
+  index_html_content = "<verbatim><html><body>"
+
+  i = 0;
+  for img_url in img_urls:
+    img_name = "img" + str(i) + ".jpg"
+    print '\n' + "Retrieving" + img_url + " saving as " + img_name + " ..."
+    urllib.urlretrieve(img_url, dest_dir + "/" + img_name)
+    index_html_content += "<img src=\"" + img_name + "\">"
+    i+=1
+
+  index_html_content += "</body></html>"
+
+  f.write(index_html_content)
+  f.close()
   
 
 def main():
